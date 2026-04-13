@@ -20,7 +20,10 @@ export default function Login({ user, onLogin }: LoginProps) {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isSupabaseConfigured) {
-      setError("Supabase is not configured. Please add credentials to Secrets.");
+      const missing = [];
+      if (!(globalThis as any).__SUPABASE_URL__) missing.push('SUPABASE_URL');
+      if (!(globalThis as any).__SUPABASE_ANON_KEY__) missing.push('SUPABASE_ANON_KEY');
+      setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }
     setLoading(true);
@@ -73,7 +76,10 @@ export default function Login({ user, onLogin }: LoginProps) {
 
   const handleGoogleSignIn = async () => {
     if (!isSupabaseConfigured) {
-      setError("Supabase is not configured. Please add credentials to Secrets.");
+      const missing = [];
+      if (!(globalThis as any).__SUPABASE_URL__) missing.push('SUPABASE_URL');
+      if (!(globalThis as any).__SUPABASE_ANON_KEY__) missing.push('SUPABASE_ANON_KEY');
+      setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }
     try {
