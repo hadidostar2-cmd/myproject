@@ -69,11 +69,11 @@ export default function StatsView({ schedule, volunteers }: StatsViewProps) {
       animate="visible"
       className="space-y-10 max-w-7xl mx-auto"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
         {/* Hours per Volunteer */}
-        <motion.div variants={itemVariants} className="glass-card p-10 rounded-[40px] shadow-xl border border-burgundy/5">
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-10 text-burgundy/40 font-sans">Hours Distribution</h3>
-          <div className="h-[350px] min-h-0 min-w-0">
+        <motion.div variants={itemVariants} className="glass-card p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-xl border border-burgundy/5">
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-6 md:mb-10 text-burgundy/40 font-sans">Hours Distribution</h3>
+          <div className="h-[300px] md:h-[350px] min-h-0 min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
               <BarChart data={hoursByVolunteer}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#80002010" />
@@ -81,36 +81,36 @@ export default function StatsView({ schedule, volunteers }: StatsViewProps) {
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{ fontSize: 10, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }}
+                  tick={{ fontSize: 9, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }}
                   interval={0}
                   angle={-45}
                   textAnchor="end"
-                  height={80}
+                  height={60}
                 />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
-                  itemStyle={{ color: '#800020', fontSize: '12px', fontWeight: 'bold' }}
-                  labelStyle={{ color: '#800020', opacity: 0.4, fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em' }}
+                  contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
+                  itemStyle={{ color: '#800020', fontSize: '11px', fontWeight: 'bold' }}
+                  labelStyle={{ color: '#800020', opacity: 0.4, fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.1em' }}
                 />
-                <Bar dataKey="hours" fill="#800020" radius={[10, 10, 0, 0]} barSize={30} />
+                <Bar dataKey="hours" fill="#800020" radius={[8, 8, 0, 0]} barSize={24} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
 
         {/* Subject Coverage */}
-        <motion.div variants={itemVariants} className="glass-card p-10 rounded-[40px] shadow-xl border border-burgundy/5">
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-10 text-burgundy/40 font-sans">Subject Coverage</h3>
-          <div className="h-[350px] min-h-0 min-w-0">
+        <motion.div variants={itemVariants} className="glass-card p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-xl border border-burgundy/5">
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-6 md:mb-10 text-burgundy/40 font-sans">Subject Coverage</h3>
+          <div className="h-[300px] md:h-[350px] min-h-0 min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
               <PieChart>
                 <Pie
                   data={subjectDistribution}
                   cx="50%"
                   cy="50%"
-                  innerRadius={80}
-                  outerRadius={120}
+                  innerRadius={60}
+                  outerRadius={100}
                   paddingAngle={8}
                   dataKey="value"
                   stroke="none"
@@ -120,17 +120,17 @@ export default function StatsView({ schedule, volunteers }: StatsViewProps) {
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
-                  itemStyle={{ color: '#800020', fontSize: '12px', fontWeight: 'bold' }}
+                  contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
+                  itemStyle={{ color: '#800020', fontSize: '11px', fontWeight: 'bold' }}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex flex-wrap gap-6 justify-center mt-6">
+          <div className="flex flex-wrap gap-4 md:gap-6 justify-center mt-4 md:mt-6">
             {subjectDistribution.map((entry, index) => (
-              <div key={entry.name} className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded-full shadow-sm" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                <span className="text-[10px] font-bold uppercase tracking-tight text-burgundy/60">{entry.name}</span>
+              <div key={entry.name} className="flex items-center gap-2 md:gap-3">
+                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full shadow-sm" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-tight text-burgundy/60">{entry.name}</span>
               </div>
             ))}
           </div>
@@ -138,9 +138,9 @@ export default function StatsView({ schedule, volunteers }: StatsViewProps) {
       </div>
 
       {/* Grade Distribution */}
-      <motion.div variants={itemVariants} className="glass-card p-10 rounded-[40px] shadow-xl border border-burgundy/5">
-        <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-10 text-burgundy/40 font-sans">Grade Level Focus</h3>
-        <div className="h-[250px] min-h-0 min-w-0">
+      <motion.div variants={itemVariants} className="glass-card p-6 md:p-10 rounded-[32px] md:rounded-[40px] shadow-xl border border-burgundy/5">
+        <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] mb-6 md:mb-10 text-burgundy/40 font-sans">Grade Level Focus</h3>
+        <div className="h-[200px] md:h-[250px] min-h-0 min-w-0">
           <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
             <BarChart data={gradeDistribution} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#80002010" />
@@ -150,14 +150,14 @@ export default function StatsView({ schedule, volunteers }: StatsViewProps) {
                 type="category" 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fontSize: 10, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }}
-                width={100}
+                tick={{ fontSize: 9, fill: '#800020', opacity: 0.4, fontWeight: 'bold' }}
+                width={80}
               />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
-                itemStyle={{ color: '#800020', fontSize: '12px', fontWeight: 'bold' }}
+                contentStyle={{ backgroundColor: '#FFFDD0', border: '1px solid rgba(128,0,32,0.1)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
+                itemStyle={{ color: '#800020', fontSize: '11px', fontWeight: 'bold' }}
               />
-              <Bar dataKey="value" fill="#800020" radius={[0, 10, 10, 0]} barSize={24} />
+              <Bar dataKey="value" fill="#800020" radius={[0, 8, 8, 0]} barSize={20} />
             </BarChart>
           </ResponsiveContainer>
         </div>

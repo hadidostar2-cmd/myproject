@@ -136,9 +136,10 @@ export default function CheckInView({ schedule, user }: CheckInViewProps) {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-card rounded-[40px] shadow-[0_40px_80px_-15px_rgba(128,0,32,0.1)] border border-burgundy/5 overflow-hidden"
+        className="glass-card rounded-[32px] md:rounded-[40px] shadow-[0_40px_80px_-15px_rgba(128,0,32,0.1)] border border-burgundy/5 overflow-hidden"
       >
-        <div className="overflow-x-auto">
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-burgundy/5 border-b border-burgundy/10">
@@ -205,6 +206,47 @@ export default function CheckInView({ schedule, user }: CheckInViewProps) {
               ))}
             </motion.tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden divide-y divide-burgundy/5">
+          {filteredSessions.map((session) => (
+            <motion.div
+              key={session.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => toggleCheckIn(session.id)}
+              className="p-6 flex items-center gap-4 active:bg-burgundy/5 transition-colors"
+            >
+              <div className="shrink-0">
+                {checkedIn[session.id] ? (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <CheckCircle2 size={28} className="text-burgundy" />
+                  </motion.div>
+                ) : (
+                  <Circle size={28} className="text-burgundy/10" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-bold text-burgundy truncate">{session.volunteer_name}</h4>
+                  <span className="text-[9px] font-mono text-burgundy/40 uppercase tracking-widest shrink-0">G{session.grade}</span>
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 bg-burgundy/5 rounded-md text-[9px] font-bold uppercase tracking-widest text-burgundy/60">
+                    {session.subject}
+                  </span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.1em] text-burgundy/40">
+                  {session.day} • {formatTime(session.start)}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
         {filteredSessions.length === 0 && (
           <motion.div 
