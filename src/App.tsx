@@ -50,6 +50,7 @@ import { Hero } from './components/Hero';
 import { XCard } from './components/ui/x-gradient-card';
 import { Hero3D } from './components/Hero3D';
 import { Entropy } from './components/ui/entropy';
+import { Analytics } from '@vercel/analytics/react';
 
 type View = 'timetable' | 'profiles' | 'stats' | 'checkin' | 'inquiry' | 'videos' | 'settings' | 'coverage' | 'login' | 'blog' | 'profile';
 type Theme = 'light' | 'dark';
@@ -641,6 +642,7 @@ export default function App() {
     </div>
     </motion.div>
     )}
+    <Analytics />
     </AnimatePresence>
   );
 }
