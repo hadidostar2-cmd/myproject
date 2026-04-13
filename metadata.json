@@ -1,5 +1,5 @@
 {
-  "name": "ACM APP",
+  "name": "ACM education project",
   "description": "A comprehensive timetable and management system for ACM AUB volunteers, featuring weekly schedules, member profiles, and statistics.",
   "requestFramePermissions": ["microphone"]
 }

@@ -47,6 +47,8 @@ html {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 html,
@@ -56,6 +58,26 @@ body {
   height: var(--app-height);
   overflow-x: hidden;
   overscroll-behavior: none;
+  /* Accessibility: Ensure minimum font size for readability */
+  font-size: 16px;
+}
+
+/* Accessibility: Focus states */
+*:focus-visible {
+  outline: 3px solid var(--burgundy);
+  outline-offset: 2px;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(4px) saturate(120%);
+    background: rgba(255, 255, 255, 0.85);
+  }
+  
+  [data-theme='dark'] .glass-card {
+    background: rgba(15, 23, 42, 0.9);
+  }
 }
 
 body {
@@ -191,5 +213,23 @@ input:focus, select:focus, textarea:focus {
     .no-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+    }
+    
+    .safe-top {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .native-scroll {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .ui-native {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
     }
 }
