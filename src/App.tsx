@@ -142,6 +142,11 @@ export default function App() {
           className="min-h-screen w-full relative"
         >
           <Hero3D onEnter={() => setHasEntered(true)} />
+          <div className="relative z-10 flex items-center justify-center min-h-screen pointer-events-none">
+            <div className="pointer-events-auto">
+              <Hero onEnter={() => setHasEntered(true)} />
+            </div>
+          </div>
           <ChatWidget />
         </motion.div>
       ) : (
