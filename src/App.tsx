@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './utils';
+import { LiquidButton } from './components/ui/liquid-glass-button';
 import { VOLUNTEERS } from './data';
 import { generateSchedule } from './scheduler';
 import { useActiveUsers } from './hooks/useActiveUsers';
@@ -51,9 +52,7 @@ const BlogEventsView = lazy(() => import('./components/BlogEventsView'));
 const ProfileView = lazy(() => import('./components/ProfileView'));
 
 // UI Components
-const BackgroundPaths = lazy(() => import('./components/ui/background-paths').then(m => ({ default: m.BackgroundPaths })));
-const Entropy = lazy(() => import('./components/ui/entropy').then(m => ({ default: m.Entropy })));
-const Hero3D = lazy(() => import('./components/Hero3D').then(m => ({ default: m.Hero3D })));
+const LandingPage = lazy(() => import('./components/LandingPage'));
 
 type View = 'timetable' | 'profiles' | 'stats' | 'checkin' | 'inquiry' | 'videos' | 'settings' | 'coverage' | 'login' | 'blog' | 'profile';
 type Theme = 'light' | 'dark';
@@ -155,7 +154,7 @@ export default function App() {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="min-h-screen w-full relative"
         >
-          <Hero3D onEnter={() => setHasEntered(true)} />
+          <LandingPage onEnter={() => setHasEntered(true)} />
           <ChatWidget />
         </motion.div>
       ) : (
@@ -400,7 +399,7 @@ export default function App() {
             {isMobile && (
               <button 
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 text-burgundy hover:bg-burgundy/5 rounded-full transition-colors"
+                className="p-4 text-burgundy hover:bg-burgundy/5 rounded-full transition-colors"
                 aria-label="Open menu"
               >
                 <Menu size={24} />
@@ -488,18 +487,6 @@ export default function App() {
               <Suspense fallback={<ViewLoader />}>
                 {activeView === 'timetable' && (
                   <div className="space-y-6 md:space-y-8">
-                    {/* Entropy Hero Section */}
-                    <div className="w-full bg-black rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl relative flex flex-col items-center justify-center py-8 md:py-12 px-4">
-                      <div className="absolute inset-0 bg-gradient-to-b from-burgundy/20 to-transparent opacity-50" />
-                      <div className="relative z-10 flex flex-col items-center">
-                        <Entropy className="rounded-3xl shadow-2xl shadow-burgundy/20" size={isMobile ? 250 : 350} />
-                        <div className="mt-6 md:mt-8 text-center space-y-2">
-                          <h2 className="text-xl md:text-2xl font-serif italic text-white">Digital Poetry in Motion</h2>
-                          <p className="text-white/50 text-[10px] md:text-xs tracking-widest uppercase">Order & Chaos</p>
-                        </div>
-                      </div>
-                    </div>
-
                     <div className="bg-burgundy text-cream p-6 md:p-8 rounded-3xl md:rounded-[40px] relative overflow-hidden shadow-2xl">
                       <div className="relative z-10 max-w-2xl">
                         <h1 className="text-3xl md:text-4xl font-serif italic mb-2">Welcome to the Hub</h1>

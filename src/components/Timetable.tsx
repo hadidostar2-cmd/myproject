@@ -4,6 +4,7 @@ import { formatTime, formatPhone, cn } from '../utils';
 import { VOLUNTEERS } from '../data';
 import { ChevronDown, Phone, Calendar, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { LiquidButton } from './ui/liquid-glass-button';
 
 interface TimetableProps {
   schedule: ScheduledSession[];
@@ -34,26 +35,30 @@ export default function Timetable({ schedule }: TimetableProps) {
       {/* Compact Controls */}
       <div className="flex flex-wrap gap-4 justify-between items-center px-4">
         <div className="flex items-center gap-1 overflow-x-auto pb-2 no-scrollbar">
-          <button 
+          <LiquidButton 
             onClick={() => setFilterDay('All')}
+            size="sm"
             className={cn(
-              "px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shrink-0",
+              "px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shrink-0",
               filterDay === 'All' ? "bg-burgundy text-cream shadow-lg" : "bg-burgundy/5 text-burgundy/40 hover:bg-burgundy/10"
             )}
+            aria-label="Show all days"
           >
             All
-          </button>
+          </LiquidButton>
           {DAYS.map(day => (
-            <button 
+            <LiquidButton 
               key={day}
               onClick={() => setFilterDay(day)}
+              size="sm"
               className={cn(
-                "px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shrink-0",
+                "px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shrink-0",
                 filterDay === day ? "bg-burgundy text-cream shadow-lg" : "bg-burgundy/5 text-burgundy/40 hover:bg-burgundy/10"
               )}
+              aria-label={`Show ${day}`}
             >
               {day.substring(0, 3)}
-            </button>
+            </LiquidButton>
           ))}
         </div>
 

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Phone, Mail, GraduationCap, BookOpen, Copy, Check, X, Languages, Target, Calendar } from 'lucide-react';
 import { useState } from 'react';
 import { formatPhone, cn } from '../utils';
+import { LiquidButton } from './ui/liquid-glass-button';
 
 interface MemberProfilesProps {
   volunteers: Volunteer[];
@@ -51,12 +52,13 @@ export default function MemberProfiles({ volunteers }: MemberProfilesProps) {
               layoutId={`card-${selectedVolunteer.id}`}
               className="bg-cream w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[48px] shadow-2xl border border-burgundy/10 relative z-10 no-scrollbar"
             >
-              <button 
+              <LiquidButton 
                 onClick={() => setSelectedVolunteer(null)}
+                size="icon"
                 className="absolute top-8 right-8 w-12 h-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy hover:bg-burgundy/10 transition-colors z-20"
               >
                 <X size={24} />
-              </button>
+              </LiquidButton>
 
               <div className="p-8 md:p-16 space-y-12">
                 <div className="space-y-6">
@@ -128,22 +130,26 @@ export default function MemberProfiles({ volunteers }: MemberProfilesProps) {
                 </div>
 
                 <div className="pt-12 border-t border-burgundy/5 flex flex-col md:flex-row gap-6">
-                  <button 
+                  <LiquidButton 
                     onClick={(e) => handleCopyPhone(e, selectedVolunteer.phone)}
+                    size="lg"
                     className="flex-1 bg-burgundy text-cream py-6 rounded-[32px] flex items-center justify-center gap-4 hover:bg-ink transition-all shadow-2xl shadow-burgundy/20 active:scale-95"
                   >
                     {copiedPhone === selectedVolunteer.phone ? <Check size={20} /> : <Phone size={20} />}
                     <span className="text-lg font-bold uppercase tracking-widest">
                       {copiedPhone === selectedVolunteer.phone ? 'Copied!' : formatPhone(selectedVolunteer.phone)}
                     </span>
-                  </button>
-                  <a 
-                    href={`mailto:${selectedVolunteer.email || 'contact@example.com'}`}
+                  </LiquidButton>
+                  <LiquidButton 
+                    asChild
+                    size="lg"
                     className="h-20 px-12 rounded-[32px] border-2 border-burgundy/10 flex items-center justify-center text-burgundy hover:bg-burgundy/5 transition-colors gap-4"
                   >
-                    <Mail size={24} />
-                    <span className="font-bold uppercase tracking-widest">Send Email</span>
-                  </a>
+                    <a href={`mailto:${selectedVolunteer.email || 'contact@example.com'}`}>
+                      <Mail size={24} />
+                      <span className="font-bold uppercase tracking-widest">Send Email</span>
+                    </a>
+                  </LiquidButton>
                 </div>
               </div>
             </motion.div>

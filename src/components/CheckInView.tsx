@@ -4,6 +4,7 @@ import { formatTime, cn } from '../utils';
 import { CheckCircle2, Circle, Search, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { LiquidButton } from './ui/liquid-glass-button';
 
 interface CheckInViewProps {
   schedule: ScheduledSession[];
@@ -109,26 +110,28 @@ export default function CheckInView({ schedule, user }: CheckInViewProps) {
           <div className="w-10 h-10 rounded-xl bg-burgundy/5 flex items-center justify-center shrink-0">
             <Filter size={16} className="text-burgundy/40" />
           </div>
-          <button 
+          <LiquidButton 
             onClick={() => setFilterDay('All')}
+            size="sm"
             className={cn(
               "px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 shrink-0 shadow-lg",
               filterDay === 'All' ? "bg-burgundy text-cream shadow-burgundy/20" : "glass-card text-burgundy/40 hover:bg-burgundy/5"
             )}
           >
             All
-          </button>
+          </LiquidButton>
           {DAYS.map(day => (
-            <button 
+            <LiquidButton 
               key={day}
               onClick={() => setFilterDay(day)}
+              size="sm"
               className={cn(
                 "px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 shrink-0 shadow-lg",
                 filterDay === day ? "bg-burgundy text-cream shadow-burgundy/20" : "glass-card text-burgundy/40 hover:bg-burgundy/5"
               )}
             >
               {day.substring(0, 3)}
-            </button>
+            </LiquidButton>
           ))}
         </div>
       </div>

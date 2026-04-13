@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Mail, Lock, User, GraduationCap, ArrowRight, Loader2 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { cn } from '../utils';
+import { LiquidButton } from './ui/liquid-glass-button';
 
 interface LoginProps {
   user: any;
@@ -123,12 +124,13 @@ export default function Login({ user, onLogin }: LoginProps) {
               </div>
             </div>
 
-            <button
+            <LiquidButton
               onClick={() => supabase.auth.signOut()}
+              size="lg"
               className="w-full bg-red-500 text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3"
             >
               Sign Out
-            </button>
+            </LiquidButton>
           </div>
         ) : (
           <>
@@ -147,9 +149,10 @@ export default function Login({ user, onLogin }: LoginProps) {
             <form onSubmit={handleAuth} className="space-y-6">
               {!isLogin && (
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <button
+                  <LiquidButton
                     type="button"
                     onClick={() => setRole('student')}
+                    size="lg"
                     className={cn(
                       "flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all",
                       role === 'student' 
@@ -159,10 +162,11 @@ export default function Login({ user, onLogin }: LoginProps) {
                   >
                     <User size={20} />
                     <span className="text-[10px] font-black uppercase tracking-widest">Student</span>
-                  </button>
-                  <button
+                  </LiquidButton>
+                  <LiquidButton
                     type="button"
                     onClick={() => setRole('tutor')}
+                    size="lg"
                     className={cn(
                       "flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all",
                       role === 'tutor' 
@@ -172,7 +176,7 @@ export default function Login({ user, onLogin }: LoginProps) {
                   >
                     <GraduationCap size={20} />
                     <span className="text-[10px] font-black uppercase tracking-widest">Tutor</span>
-                  </button>
+                  </LiquidButton>
                 </div>
               )}
 
@@ -213,9 +217,10 @@ export default function Login({ user, onLogin }: LoginProps) {
                 </motion.p>
               )}
 
-              <button
+              <LiquidButton
                 type="submit"
                 disabled={loading}
+                size="lg"
                 className="w-full bg-burgundy text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
               >
                 {loading ? (
@@ -226,7 +231,7 @@ export default function Login({ user, onLogin }: LoginProps) {
                     <ArrowRight size={20} />
                   </>
                 )}
-              </button>
+              </LiquidButton>
             </form>
 
             <div className="mt-6 relative flex items-center justify-center">
@@ -238,8 +243,9 @@ export default function Login({ user, onLogin }: LoginProps) {
               </div>
             </div>
 
-            <button
+            <LiquidButton
               onClick={handleGoogleSignIn}
+              size="lg"
               className="mt-6 w-full bg-white border border-burgundy/10 text-burgundy py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-sm hover:bg-burgundy/5 transition-all flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -261,7 +267,7 @@ export default function Login({ user, onLogin }: LoginProps) {
                 />
               </svg>
               Google
-            </button>
+            </LiquidButton>
 
             <div className="mt-8 text-center">
               <button
