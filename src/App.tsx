@@ -191,7 +191,7 @@ export default function App() {
               <div className="w-8 h-8 bg-cream rounded-sm flex items-center justify-center">
                 <span className="text-burgundy font-bold text-xs">ACM</span>
               </div>
-              <span className="font-bold tracking-tight text-lg">APP</span>
+              <span className="font-bold tracking-tight text-lg">EDUCATION PROJECT</span>
             </motion.div>
           )}
           <button

@@ -57,7 +57,7 @@ function FloatingTablet({ onEnter }: { onEnter: () => void }) {
         >
           <div className="text-center space-y-8">
             <h1 className="text-6xl font-serif italic text-white mb-4">
-              ACM APP
+              ACM EDUCATION PROJECT
             </h1>
             <p className="text-2xl font-mono text-white/70 uppercase tracking-widest">
               Empowering Through Science
