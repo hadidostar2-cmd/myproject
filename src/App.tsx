@@ -67,14 +67,22 @@ export default function App() {
   const schedule = useMemo(() => generateSchedule(VOLUNTEERS), []);
 
   useEffect(() => {
+    // Mobile viewport height fix
+    const setAppHeight = () => {
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    };
+    window.addEventListener('resize', setAppHeight);
+    setAppHeight();
+
     document.documentElement.setAttribute('data-theme', theme);
+    return () => window.removeEventListener('resize', setAppHeight);
   }, [theme]);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
       const missing = [];
-      if (!(globalThis as any).__SUPABASE_URL__) missing.push('SUPABASE_URL');
-      if (!(globalThis as any).__SUPABASE_ANON_KEY__) missing.push('SUPABASE_ANON_KEY');
+      if (!import.meta.env.VITE_SUPABASE_URL) missing.push('SUPABASE_URL');
+      if (!import.meta.env.VITE_SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
       console.warn(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }
@@ -182,7 +190,7 @@ export default function App() {
       <motion.aside
         initial={false}
         animate={{ width: isSidebarOpen ? 280 : 80 }}
-        className="bg-burgundy text-cream flex flex-col border-r border-burgundy/10 z-50 shadow-2xl transition-colors duration-500"
+        className="hidden md:flex bg-burgundy text-cream flex-col border-r border-burgundy/10 z-50 shadow-2xl transition-colors duration-500"
       >
         <div className="p-6 flex items-center justify-between">
           {isSidebarOpen && (
@@ -363,13 +371,13 @@ export default function App() {
       </motion.aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-y-auto relative no-scrollbar scroll-smooth">
+      <main className="flex-1 flex flex-col overflow-y-auto relative no-scrollbar scroll-smooth pb-20 md:pb-0">
         
         <div className="min-h-screen flex flex-col">
           {/* Header */}
-          <header className="h-20 bg-white/50 backdrop-blur-md border-b border-burgundy/5 flex items-center justify-between px-8 shrink-0 z-40 transition-colors duration-500">
-          <div className="flex items-center gap-6">
-            <h2 className="text-2xl font-serif italic text-burgundy">
+          <header className="h-16 md:h-20 bg-white/50 backdrop-blur-md border-b border-burgundy/5 flex items-center justify-between px-4 md:px-8 shrink-0 z-40 transition-colors duration-500">
+          <div className="flex items-center gap-3 md:gap-6">
+            <h2 className="text-lg md:text-2xl font-serif italic text-burgundy truncate max-w-[150px] md:max-w-none">
               {activeView === 'timetable' && 'Weekly Timetable'}
               {activeView === 'profiles' && 'Volunteer Profiles'}
               {activeView === 'stats' && 'Analytics & Insights'}
@@ -381,8 +389,8 @@ export default function App() {
               {activeView === 'blog' && 'Blog & Events'}
               {activeView === 'profile' && 'My Profile'}
             </h2>
-            <div className="h-4 w-[1px] bg-burgundy/10" />
-            <div className="flex items-center gap-4 text-xs font-mono text-burgundy/40 uppercase tracking-widest">
+            <div className="hidden md:block h-4 w-[1px] bg-burgundy/10" />
+            <div className="hidden md:flex items-center gap-4 text-xs font-mono text-burgundy/40 uppercase tracking-widest">
               <div className="flex items-center gap-1">
                 <TimerIcon size={12} />
                 <span>GMT+3</span>
@@ -394,67 +402,61 @@ export default function App() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {user ? (
               <>
                 <button
                   onClick={() => setActiveView('profile')}
+                  aria-label="View profile"
                   className={cn(
-                    "flex items-center gap-3 px-4 py-2 rounded-2xl transition-all group",
+                    "flex items-center gap-2 md:gap-3 px-2 md:px-4 py-2 rounded-2xl transition-all group",
                     activeView === 'profile' ? "bg-burgundy text-cream shadow-lg" : "bg-burgundy/5 text-burgundy hover:bg-burgundy/10"
                   )}
                 >
-                  <div className="w-8 h-8 rounded-full bg-burgundy/10 flex items-center justify-center text-burgundy group-hover:bg-burgundy group-hover:text-cream transition-colors">
-                    <User size={16} />
+                  <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-burgundy/10 flex items-center justify-center text-burgundy group-hover:bg-burgundy group-hover:text-cream transition-colors">
+                    <User size={14} />
                   </div>
-                  <div className="flex flex-col items-start">
-                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40 leading-none">Profile</span>
-                    <span className="text-xs font-bold leading-none mt-1">{user.email.split('@')[0]}</span>
+                  <div className="hidden sm:flex flex-col items-start">
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40 leading-none">Profile</span>
+                    <span className="text-[10px] md:text-xs font-bold leading-none mt-1">{user.email.split('@')[0]}</span>
                   </div>
                 </button>
-                <div className="flex flex-col items-end mr-2">
-                  <span className="text-[10px] font-black text-burgundy/40 uppercase tracking-widest">
-                    Logged in as
-                  </span>
-                  <span className="text-xs font-bold text-burgundy">
-                    {user.email}
-                  </span>
-                </div>
                 <button 
                   onClick={() => supabase.auth.signOut()}
-                  className="p-3 rounded-2xl glass-card text-burgundy hover:bg-red-500 hover:text-cream transition-all shadow-lg cursor-pointer"
-                  title="Logout"
+                  className="p-2 md:p-3 rounded-xl md:rounded-2xl glass-card text-burgundy hover:bg-red-500 hover:text-cream transition-all shadow-lg cursor-pointer"
+                  aria-label="Logout"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
               </>
             ) : (
               <button
                 onClick={() => setActiveView('login')}
-                className="bg-burgundy text-cream px-6 py-2 rounded-2xl font-bold text-sm shadow-lg hover:scale-105 transition-all cursor-pointer"
+                aria-label="Log in"
+                className="bg-burgundy text-cream px-4 md:px-6 py-2 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm shadow-lg hover:scale-105 transition-all cursor-pointer"
               >
                 Log In
               </button>
             )}
             <button 
               onClick={() => setHasEntered(false)}
-              className="p-3 rounded-2xl glass-card text-burgundy hover:bg-burgundy hover:text-cream transition-all shadow-lg cursor-pointer"
+              className="p-2 md:p-3 rounded-xl md:rounded-2xl glass-card text-burgundy hover:bg-burgundy hover:text-cream transition-all shadow-lg cursor-pointer"
               aria-label="Return to landing page"
             >
-              <Home size={20} />
+              <Home size={18} />
             </button>
             <button 
               onClick={toggleTheme}
-              className="p-3 rounded-2xl glass-card text-burgundy hover:bg-burgundy hover:text-cream transition-all shadow-lg cursor-pointer"
+              className="p-2 md:p-3 rounded-xl md:rounded-2xl glass-card text-burgundy hover:bg-burgundy hover:text-cream transition-all shadow-lg cursor-pointer"
               aria-label={theme === 'light' ? "Switch to dark theme" : "Switch to light theme"}
             >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
           </div>
         </header>
 
         {/* View Content */}
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeView}
@@ -465,28 +467,28 @@ export default function App() {
               className="h-full"
             >
               {activeView === 'timetable' && (
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8">
                   {/* Entropy Hero Section */}
-                  <div className="w-full bg-black rounded-[40px] overflow-hidden shadow-2xl relative flex flex-col items-center justify-center py-12 px-4">
+                  <div className="w-full bg-black rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl relative flex flex-col items-center justify-center py-8 md:py-12 px-4">
                     <div className="absolute inset-0 bg-gradient-to-b from-burgundy/20 to-transparent opacity-50" />
                     <div className="relative z-10 flex flex-col items-center">
-                      <Entropy className="rounded-3xl shadow-2xl shadow-burgundy/20" size={350} />
-                      <div className="mt-8 text-center space-y-2">
-                        <h2 className="text-2xl font-serif italic text-white">Digital Poetry in Motion</h2>
-                        <p className="text-white/50 text-xs tracking-widest uppercase">Order & Chaos</p>
+                      <Entropy className="rounded-2xl md:rounded-3xl shadow-2xl shadow-burgundy/20 w-[200px] md:w-[350px]" size={350} />
+                      <div className="mt-6 md:mt-8 text-center space-y-2">
+                        <h2 className="text-xl md:text-2xl font-serif italic text-white">Digital Poetry in Motion</h2>
+                        <p className="text-white/50 text-[10px] md:text-xs tracking-widest uppercase">Order & Chaos</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-burgundy text-cream p-8 rounded-[40px] relative overflow-hidden shadow-2xl">
+                  <div className="bg-burgundy text-cream p-6 md:p-8 rounded-[30px] md:rounded-[40px] relative overflow-hidden shadow-2xl">
                     <div className="relative z-10 max-w-2xl">
-                      <h1 className="text-4xl font-serif italic mb-2">Welcome to the Hub</h1>
-                      <p className="text-cream/60 leading-relaxed text-sm">
+                      <h1 className="text-2xl md:text-4xl font-serif italic mb-2">Welcome to the Hub</h1>
+                      <p className="text-cream/60 leading-relaxed text-xs md:text-sm">
                         Official volunteering schedule for ACM AUB. 
                         Scientific excellence and equal opportunity.
                       </p>
                     </div>
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-cream/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+                    <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-cream/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
                   </div>
                   <Timetable schedule={schedule} />
                 </div>
@@ -510,49 +512,49 @@ export default function App() {
                 </div>
               )}
               {activeView === 'settings' && (
-                <div className="max-w-4xl mx-auto space-y-8">
-                  <div className="glass-card p-12 rounded-[40px] border border-burgundy/5">
-                    <h3 className="text-3xl font-serif italic text-burgundy mb-8">System Settings</h3>
+                <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+                  <div className="glass-card p-6 md:p-12 rounded-[30px] md:rounded-[40px] border border-burgundy/5">
+                    <h3 className="text-2xl md:text-3xl font-serif italic text-burgundy mb-6 md:mb-8">System Settings</h3>
                     
-                    <div className="space-y-12">
-                      <div className="flex items-center justify-between p-8 bg-burgundy/5 rounded-3xl border border-burgundy/10">
+                    <div className="space-y-8 md:space-y-12">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 bg-burgundy/5 rounded-2xl md:rounded-3xl border border-burgundy/10 gap-6">
                         <div>
-                          <h4 className="text-xl font-bold text-burgundy mb-1">Visual Theme</h4>
-                          <p className="text-burgundy/40 text-sm">Switch between light and dark modes</p>
+                          <h4 className="text-lg md:text-xl font-bold text-burgundy mb-1">Visual Theme</h4>
+                          <p className="text-burgundy/40 text-xs md:text-sm">Switch between light and dark modes</p>
                         </div>
                         <button 
                           onClick={toggleTheme}
-                          className="flex items-center gap-4 bg-burgundy text-cream px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl hover:scale-105 transition-all cursor-pointer"
+                          className="flex items-center justify-center gap-4 bg-burgundy text-cream px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest shadow-xl hover:scale-105 transition-all cursor-pointer"
                         >
                           {theme === 'light' ? <><Moon size={16} /> Dark Mode</> : <><Sun size={16} /> Light Mode</>}
                         </button>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="p-8 glass-card rounded-3xl border border-burgundy/5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div className="p-6 md:p-8 glass-card rounded-2xl md:rounded-3xl border border-burgundy/5">
                           <h4 className="font-bold text-burgundy mb-4">Notifications</h4>
                           <div className="space-y-4">
                             <label className="flex items-center justify-between cursor-pointer group">
-                              <span className="text-sm text-burgundy/60 group-hover:text-burgundy transition-colors">Email Alerts</span>
-                              <div className="w-12 h-6 bg-burgundy/10 rounded-full relative">
-                                <div className="absolute left-1 top-1 w-4 h-4 bg-burgundy rounded-full" />
+                              <span className="text-xs md:text-sm text-burgundy/60 group-hover:text-burgundy transition-colors">Email Alerts</span>
+                              <div className="w-10 h-5 md:w-12 md:h-6 bg-burgundy/10 rounded-full relative">
+                                <div className="absolute left-1 top-1 w-3 h-3 md:w-4 md:h-4 bg-burgundy rounded-full" />
                               </div>
                             </label>
                             <label className="flex items-center justify-between cursor-pointer group">
-                              <span className="text-sm text-burgundy/60 group-hover:text-burgundy transition-colors">Browser Notifications</span>
-                              <div className="w-12 h-6 bg-burgundy rounded-full relative">
-                                <div className="absolute right-1 top-1 w-4 h-4 bg-cream rounded-full" />
+                              <span className="text-xs md:text-sm text-burgundy/60 group-hover:text-burgundy transition-colors">Browser Notifications</span>
+                              <div className="w-10 h-5 md:w-12 md:h-6 bg-burgundy rounded-full relative">
+                                <div className="absolute right-1 top-1 w-3 h-3 md:w-4 md:h-4 bg-cream rounded-full" />
                               </div>
                             </label>
                           </div>
                         </div>
 
-                        <div className="p-8 glass-card rounded-3xl border border-burgundy/5">
+                        <div className="p-6 md:p-8 glass-card rounded-2xl md:rounded-3xl border border-burgundy/5">
                           <h4 className="font-bold text-burgundy mb-4">Data Privacy</h4>
-                          <p className="text-sm text-burgundy/40 leading-relaxed mb-6">
+                          <p className="text-xs md:text-sm text-burgundy/40 leading-relaxed mb-6">
                             Your data is encrypted and stored securely. We never share your personal information with third parties.
                           </p>
-                          <button className="text-xs font-black uppercase tracking-widest text-burgundy underline underline-offset-4">
+                          <button className="text-[10px] md:text-xs font-black uppercase tracking-widest text-burgundy underline underline-offset-4">
                             Privacy Policy
                           </button>
                         </div>
@@ -563,37 +565,37 @@ export default function App() {
               )}
               {activeView === 'inquiry' && (
                 <div className="max-w-4xl mx-auto">
-                  <div className="bg-white p-12 rounded-[40px] shadow-xl border border-burgundy/5 relative overflow-hidden">
+                  <div className="bg-white p-6 md:p-12 rounded-[30px] md:rounded-[40px] shadow-xl border border-burgundy/5 relative overflow-hidden">
                     <div className="relative z-10">
-                      <h3 className="text-3xl font-serif italic text-burgundy mb-8">Inquiries & Support</h3>
-                      <p className="text-burgundy/60 mb-12 text-lg leading-relaxed">
+                      <h3 className="text-2xl md:text-3xl font-serif italic text-burgundy mb-6 md:mb-8">Inquiries & Support</h3>
+                      <p className="text-burgundy/60 mb-8 md:mb-12 text-base md:text-lg leading-relaxed">
                         If you have any questions regarding the schedule, volunteering opportunities, or technical issues with the hub, please don't hesitate to reach out.
                       </p>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="p-8 bg-burgundy/5 rounded-3xl border border-burgundy/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div className="p-6 md:p-8 bg-burgundy/5 rounded-2xl md:rounded-3xl border border-burgundy/10">
                           <h4 className="font-bold text-burgundy mb-4 flex items-center gap-2">
                             <Users size={18} /> Hadi Kassem
                           </h4>
-                          <p className="text-sm text-burgundy/40 uppercase tracking-widest mb-6 font-mono">Web Developer & Support</p>
+                          <p className="text-[10px] md:text-sm text-burgundy/40 uppercase tracking-widest mb-4 md:mb-6 font-mono">Web Developer & Support</p>
                           <div className="space-y-4">
-                            <a href="tel:+96103672478" className="flex items-center gap-3 text-burgundy hover:text-burgundy/70 transition-colors">
+                            <a href="tel:+96103672478" className="flex items-center gap-3 text-burgundy hover:text-burgundy/70 transition-colors text-sm">
                               <PhoneIcon size={16} />
                               <span>+961 03 672 478</span>
                             </a>
-                            <a href="mailto:hadidokassem@gmail.com" className="flex items-center gap-3 text-burgundy hover:text-burgundy/70 transition-colors">
+                            <a href="mailto:hadidokassem@gmail.com" className="flex items-center gap-3 text-burgundy hover:text-burgundy/70 transition-colors text-sm">
                               <Mail size={16} />
                               <span>hadidokassem@gmail.com</span>
                             </a>
                           </div>
                         </div>
 
-                        <div className="p-8 bg-burgundy/5 rounded-3xl border border-burgundy/10">
+                        <div className="p-6 md:p-8 bg-burgundy/5 rounded-2xl md:rounded-3xl border border-burgundy/10">
                           <h4 className="font-bold text-burgundy mb-4 flex items-center gap-2">
                             <GraduationCap size={18} /> ACM AUB
                           </h4>
-                          <p className="text-sm text-burgundy/40 uppercase tracking-widest mb-6 font-mono">Official Group</p>
-                          <p className="text-sm text-burgundy/60 leading-relaxed">
+                          <p className="text-[10px] md:text-sm text-burgundy/40 uppercase tracking-widest mb-4 md:mb-6 font-mono">Official Group</p>
+                          <p className="text-xs md:text-sm text-burgundy/60 leading-relaxed">
                             American University of Beirut <br />
                             Computer Science Department <br />
                             Beirut, Lebanon
@@ -601,13 +603,38 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                    <div className="absolute bottom-0 right-0 w-64 h-64 bg-burgundy/5 rounded-full translate-y-1/2 translate-x-1/2 blur-3xl" />
+                    <div className="absolute bottom-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-burgundy/5 rounded-full translate-y-1/2 translate-x-1/2 blur-3xl" />
                   </div>
                 </div>
               )}
             </motion.div>
           </AnimatePresence>
         </div>
+        
+        {/* Mobile Bottom Navigation */}
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-burgundy/10 px-6 py-3 flex items-center justify-between z-50 safe-bottom">
+          {[
+            { id: 'timetable', icon: Calendar, label: 'Schedule' },
+            { id: 'profiles', icon: Users, label: 'Members' },
+            { id: 'videos', icon: Video, label: 'Videos' },
+            { id: 'blog', icon: MessageSquare, label: 'Blog' },
+            { id: 'login', icon: UserCircle, label: 'Account' }
+          ].map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setActiveView(item.id as View)}
+              aria-label={item.label}
+              aria-current={activeView === item.id ? 'page' : undefined}
+              className={cn(
+                "flex flex-col items-center gap-1 transition-all",
+                activeView === item.id ? "text-burgundy scale-110" : "text-burgundy/30"
+              )}
+            >
+              <item.icon size={20} />
+              <span className="text-[8px] font-black uppercase tracking-widest">{item.label}</span>
+            </button>
+          ))}
+        </nav>
         </div>
       </main>
       <ChatWidget />
