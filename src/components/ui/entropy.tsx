@@ -107,7 +107,7 @@ export function Entropy({ className = "", size = 400 }: EntropyProps) {
 
     // 创建粒子网格
     const particles: Particle[] = []
-    const gridSize = 25
+    const gridSize = 18 // Reduced from 25
     const spacing = size / gridSize
 
     for (let i = 0; i < gridSize; i++) {
@@ -121,12 +121,19 @@ export function Entropy({ className = "", size = 400 }: EntropyProps) {
 
     // 更新邻居关系
     function updateNeighbors() {
+      const threshold = 80 // Slightly reduced from 100
       particles.forEach(particle => {
-        particle.neighbors = particles.filter(other => {
-          if (other === particle) return false
-          const distance = Math.hypot(particle.x - other.x, particle.y - other.y)
-          return distance < 100
-        })
+        particle.neighbors = []
+        for (let i = 0; i < particles.length; i++) {
+          const other = particles[i]
+          if (other === particle) continue
+          const dx = particle.x - other.x
+          const dy = particle.y - other.y
+          const distSq = dx * dx + dy * dy
+          if (distSq < threshold * threshold) {
+            particle.neighbors.push(other)
+          }
+        }
       })
     }
 

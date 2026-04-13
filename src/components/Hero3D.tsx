@@ -57,7 +57,7 @@ function FloatingTablet({ onEnter }: { onEnter: () => void }) {
         >
           <div className="text-center space-y-8">
             <h1 className="text-6xl font-serif italic text-white mb-4">
-              ACM AUB Hub
+              ACM APP
             </h1>
             <p className="text-2xl font-mono text-white/70 uppercase tracking-widest">
               Empowering Through Science
@@ -92,22 +92,22 @@ function GlowingRing() {
     <group ref={ringRef} position={[0, 0, -2]}>
       {/* Core */}
       <mesh>
-        <torusGeometry args={[3, 0.02, 32, 100]} />
+        <torusGeometry args={[3, 0.02, 16, 64]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
       {/* Inner Glow */}
       <mesh>
-        <torusGeometry args={[3, 0.08, 32, 100]} />
+        <torusGeometry args={[3, 0.08, 16, 64]} />
         <meshBasicMaterial color="#FFFDD0" transparent opacity={0.6} blending={THREE.AdditiveBlending} />
       </mesh>
       {/* Outer Glow */}
       <mesh>
-        <torusGeometry args={[3, 0.25, 32, 100]} />
+        <torusGeometry args={[3, 0.25, 16, 64]} />
         <meshBasicMaterial color="#800020" transparent opacity={0.4} blending={THREE.AdditiveBlending} />
       </mesh>
       {/* Massive subtle glow */}
       <mesh>
-        <torusGeometry args={[3, 0.8, 32, 100]} />
+        <torusGeometry args={[3, 0.8, 16, 64]} />
         <meshBasicMaterial color="#800020" transparent opacity={0.15} blending={THREE.AdditiveBlending} />
       </mesh>
       <pointLight color="#FFFDD0" intensity={3} distance={15} />
@@ -116,7 +116,7 @@ function GlowingRing() {
 }
 
 function Particles() {
-  const count = 500;
+  const count = 300;
   const mesh = useRef<THREE.InstancedMesh>(null);
   const dummy = new THREE.Object3D();
   const time = useRef(0);
@@ -149,7 +149,7 @@ function Particles() {
 
   return (
     <instancedMesh ref={mesh} args={[null as any, null as any, count]}>
-      <sphereGeometry args={[0.03, 16, 16]} />
+      <sphereGeometry args={[0.03, 8, 8]} />
       <meshStandardMaterial color="#800020" roughness={0.4} metalness={0.6} emissive="#800020" emissiveIntensity={0.2} />
     </instancedMesh>
   );
@@ -170,7 +170,7 @@ export function Hero3D({ onEnter }: { onEnter: () => void }) {
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} performance={{ min: 0.5 }} style={{ position: 'relative', zIndex: 1 }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={1} performance={{ min: 0.5 }} style={{ position: 'relative', zIndex: 1 }}>
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
         <pointLight position={[-10, -10, -10]} intensity={0.5} />
@@ -190,8 +190,8 @@ export function Hero3D({ onEnter }: { onEnter: () => void }) {
         <mesh position={[0, -2.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[50, 50]} />
           <MeshReflectorMaterial
-            blur={[300, 100]}
-            resolution={2048}
+            blur={[100, 100]}
+            resolution={512}
             mixBlur={1}
             mixStrength={80}
             roughness={1}
