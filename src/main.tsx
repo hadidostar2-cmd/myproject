@@ -17,7 +17,7 @@ window.onerror = function(message, source, lineno, colno, error) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-    <Analytics />
+    <Analytics debug={true} />
   </StrictMode>,
 );
 
