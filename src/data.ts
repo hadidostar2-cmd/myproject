@@ -23,8 +23,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 5,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: true,
     role: 'Organizer',
     description: 'The heart and soul of ACM AUB. Souad manages everything with grace and precision, ensuring every volunteer and student feels supported.',
     color: '#9C27B0'
@@ -48,8 +46,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 5,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: true,
     role: 'Web Dev',
     description: 'The digital architect of ACM AUB. Hadi balances coding the future with teaching the fundamentals of science.',
     color: '#FFC107'
@@ -73,8 +69,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 4,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: true,
     role: 'Member',
     description: 'A dedicated biologist with a passion for teaching English and life sciences. Reem brings a gentle and encouraging spirit to every session.',
     color: '#E91E63'
@@ -97,8 +91,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 2,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: false,
     role: 'Member',
     description: 'A mathematical wizard who simplifies complex physics problems into bite-sized pieces. Ahmad is known for his flexible and patient approach.',
     color: '#673AB7'
@@ -122,8 +114,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: false,
     role: 'Member',
     description: 'Hussein is a reliable and steady presence, always ready to dive into math problems and help students find their footing.',
     color: '#3F51B5'
@@ -145,8 +135,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: false,
     role: 'Member',
     description: 'Bilingual and brilliant, Serena bridges the gap between languages and complex physics concepts with ease.',
     color: '#2196F3'
@@ -170,8 +158,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 2,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: false,
     role: 'Member',
     description: 'A multi-talented volunteer who excels in all things scientific. Rayan is always ready to tackle the toughest questions.',
     color: '#03A9F4'
@@ -194,8 +180,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: false,
     role: 'Member',
     description: 'Dalia brings the wonders of biology and chemistry to life. Her enthusiasm for science is truly contagious.',
     color: '#00BCD4'
@@ -225,8 +209,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: false,
     role: 'Member',
     description: 'With a schedule as diverse as her skills, Batoul is a versatile powerhouse in the ACM AUB volunteering team.',
     color: '#009688'
@@ -251,8 +233,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 5,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: true,
     role: 'Member',
     description: 'A consistent and dedicated mentor, Mohammad is the go-to person for anyone struggling with math or physics.',
     color: '#4CAF50'
@@ -278,8 +258,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 2,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: true,
     role: 'Member',
     description: 'Hussein brings a weekend energy that keeps the momentum going. His clarity in teaching is highly valued.',
     color: '#8BC34A'
@@ -301,8 +279,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 2,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: true,
     role: 'Member',
     description: 'An English specialist who helps students find their voice and master the SATs with confidence.',
     color: '#CDDC39'
@@ -327,8 +303,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: true,
     role: 'Member',
     description: 'Ali is a multilingual science enthusiast who brings a global perspective to every tutoring session.',
     color: '#FFEB3B'
@@ -353,8 +327,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 3,
     actual_hours: 0,
-    can_problem_solve: true,
-    can_review: true,
     role: 'Member',
     description: 'A true polymath. Layla can teach almost anything, making her an invaluable asset to the entire team.',
     color: '#FF9800'
@@ -379,8 +351,6 @@ export const VOLUNTEERS: Volunteer[] = [
     ],
     target_hours: 2,
     actual_hours: 0,
-    can_problem_solve: false,
-    can_review: false,
     role: 'Member',
     description: 'Karim is a sharp and focused tutor who excels in breaking down complex scientific theories into understandable concepts.',
     color: '#FF5722'

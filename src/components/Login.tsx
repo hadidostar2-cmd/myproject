@@ -20,10 +20,7 @@ export default function Login({ user, onLogin }: LoginProps) {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isSupabaseConfigured) {
-      const missing = [];
-      if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
-      if (!process.env.SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
-      setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
+      setError("Supabase is not configured. Please add credentials to Secrets.");
       return;
     }
     setLoading(true);
@@ -76,10 +73,7 @@ export default function Login({ user, onLogin }: LoginProps) {
 
   const handleGoogleSignIn = async () => {
     if (!isSupabaseConfigured) {
-      const missing = [];
-      if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
-      if (!process.env.SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
-      setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
+      setError("Supabase is not configured. Please add credentials to Secrets.");
       return;
     }
     try {
@@ -131,8 +125,7 @@ export default function Login({ user, onLogin }: LoginProps) {
 
             <button
               onClick={() => supabase.auth.signOut()}
-              aria-label="Sign out of your account"
-              className="w-full bg-red-500 text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 min-h-[56px]"
+              className="w-full bg-red-500 text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3"
             >
               Sign Out
             </button>
@@ -223,8 +216,7 @@ export default function Login({ user, onLogin }: LoginProps) {
               <button
                 type="submit"
                 disabled={loading}
-                aria-label={isLogin ? 'Login to your account' : 'Sign up for a new account'}
-                className="w-full bg-burgundy text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50 min-h-[56px]"
+                className="w-full bg-burgundy text-cream py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={20} />
@@ -248,8 +240,7 @@ export default function Login({ user, onLogin }: LoginProps) {
 
             <button
               onClick={handleGoogleSignIn}
-              aria-label="Continue with Google"
-              className="mt-6 w-full bg-white border border-burgundy/10 text-burgundy py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-sm hover:bg-burgundy/5 transition-all flex items-center justify-center gap-3 min-h-[56px]"
+              className="mt-6 w-full bg-white border border-burgundy/10 text-burgundy py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-sm hover:bg-burgundy/5 transition-all flex items-center justify-center gap-3"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path

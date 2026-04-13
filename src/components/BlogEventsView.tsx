@@ -52,10 +52,7 @@ export default function BlogEventsView({ user }: BlogEventsViewProps) {
   }, []);
 
   const fetchPosts = async () => {
-    if (!isSupabaseConfigured) {
-      setLoading(false);
-      return;
-    }
+    if (!isSupabaseConfigured) return;
     try {
       const { data, error } = await supabase
         .from('posts')

@@ -6,6 +6,14 @@ export type SessionStatus = 'scheduled' | 'live' | 'completed' | 'cancelled';
 export type UserRole = 'admin' | 'volunteer' | 'student';
 export type Day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'elevenlabs-convai': any;
+    }
+  }
+}
+
 export interface TimeSlot {
   day: Day;
   start: number; // 24h format
