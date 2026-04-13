@@ -64,8 +64,20 @@ body {
 
 /* Accessibility: Focus states */
 *:focus-visible {
-  outline: 2px solid var(--burgundy);
+  outline: 3px solid var(--burgundy);
   outline-offset: 2px;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(4px) saturate(120%);
+    background: rgba(255, 255, 255, 0.85);
+  }
+  
+  [data-theme='dark'] .glass-card {
+    background: rgba(15, 23, 42, 0.9);
+  }
 }
 
 body {

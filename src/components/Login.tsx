@@ -21,8 +21,8 @@ export default function Login({ user, onLogin }: LoginProps) {
     e.preventDefault();
     if (!isSupabaseConfigured) {
       const missing = [];
-      if (!import.meta.env.VITE_SUPABASE_URL) missing.push('SUPABASE_URL');
-      if (!import.meta.env.VITE_SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
+      if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
+      if (!process.env.SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
       setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }
@@ -77,8 +77,8 @@ export default function Login({ user, onLogin }: LoginProps) {
   const handleGoogleSignIn = async () => {
     if (!isSupabaseConfigured) {
       const missing = [];
-      if (!import.meta.env.VITE_SUPABASE_URL) missing.push('SUPABASE_URL');
-      if (!import.meta.env.VITE_SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
+      if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
+      if (!process.env.SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
       setError(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }

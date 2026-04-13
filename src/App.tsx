@@ -81,8 +81,8 @@ export default function App() {
   useEffect(() => {
     if (!isSupabaseConfigured) {
       const missing = [];
-      if (!import.meta.env.VITE_SUPABASE_URL) missing.push('SUPABASE_URL');
-      if (!import.meta.env.VITE_SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
+      if (!process.env.SUPABASE_URL) missing.push('SUPABASE_URL');
+      if (!process.env.SUPABASE_ANON_KEY) missing.push('SUPABASE_ANON_KEY');
       console.warn(`Supabase is not configured. Missing: ${missing.join(', ')}. Please add them to Secrets.`);
       return;
     }

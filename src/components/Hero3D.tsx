@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Environment, ContactShadows, PresentationControls, Html, Text, MeshReflectorMaterial, RoundedBox } from '@react-three/drei';
+import { Float, Environment, PresentationControls, Html, MeshReflectorMaterial, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'motion/react';
 import { MoveRight } from 'lucide-react';
@@ -64,6 +64,7 @@ function FloatingTablet({ onEnter }: { onEnter: () => void }) {
             </p>
             <button 
               onClick={onEnter}
+              aria-label="Enter the Education Hub"
               className="mt-12 px-8 py-4 bg-white text-black rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform flex items-center gap-4 mx-auto"
             >
               Enter Hub <MoveRight />
@@ -156,6 +157,88 @@ function Particles() {
 }
 
 export function Hero3D({ onEnter }: { onEnter: () => void }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="w-full h-screen absolute inset-0 z-0 overflow-hidden flex flex-col items-center justify-center bg-burgundy">
+        <motion.div 
+          className="absolute inset-0 z-0"
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 30%, #800020 0%, #2D000B 100%)',
+              'radial-gradient(circle at 80% 70%, #800020 0%, #2D000B 100%)',
+              'radial-gradient(circle at 50% 50%, #800020 0%, #2D000B 100%)',
+              'radial-gradient(circle at 20% 30%, #800020 0%, #2D000B 100%)',
+            ]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        />
+        
+        <div className="relative z-10 text-center px-8 space-y-12 max-w-lg">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-4"
+          >
+            <h1 className="text-5xl md:text-6xl font-serif italic text-white leading-tight tracking-tight">
+              ACM EDUCATION PROJECT
+            </h1>
+            <div className="h-1 w-20 bg-cream/30 mx-auto rounded-full" />
+            <p className="text-sm md:text-base font-mono text-cream/60 uppercase tracking-[0.4em]">
+              Empowering Through Science
+            </p>
+          </motion.div>
+
+          <motion.button 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            onClick={onEnter}
+            aria-label="Enter the Education Hub"
+            className="w-full py-5 bg-cream text-burgundy rounded-2xl font-black uppercase tracking-[0.2em] text-sm shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center gap-4 active:scale-95 transition-all"
+          >
+            Enter Hub <MoveRight size={20} />
+          </motion.button>
+        </div>
+
+        {/* Lightweight decorative elements for mobile */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-cream/20 rounded-full"
+              initial={{ 
+                x: Math.random() * 100 + '%', 
+                y: Math.random() * 100 + '%' 
+              }}
+              animate={{ 
+                y: ['-10%', '110%'],
+                opacity: [0, 1, 0]
+              }}
+              transition={{ 
+                duration: Math.random() * 10 + 10, 
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 10
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-screen absolute inset-0 z-0 overflow-hidden">
       <motion.div 
